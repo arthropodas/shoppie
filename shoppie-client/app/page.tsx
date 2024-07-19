@@ -1,10 +1,18 @@
 import Image from "next/image";
 import Login from "./components/Login";
+import LandingPage from "./components/LandingPage";
+import { createTheme, MantineProvider } from "@mantine/core";
+import "@mantine/core/styles.css";
+import Header from "./components/Header";
+const theme = createTheme({
+  /** Put your mantine theme override here */
+});
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-   <Login/>
-    </main>
+    <MantineProvider theme={theme}>
+
+      <LandingPage />
+    </MantineProvider>
   );
 }
