@@ -1,9 +1,19 @@
+import Image from "next/image";
 import React from "react";
 
 const Header: React.FC = () => {
   return (
-    <div className="h-20 bg-gray-100 flex">
-      <div className="bg-white p-5 w-1/3">
+    <div className="min-h-20 bg-slate-100 flex flex-wrap justify-between items-center px-4">
+      <div className="pl-24">
+        <Image
+          src="/images/shoppielogo.png" // Path relative to the public directory
+          alt="Shop Logo"
+          width={150}
+          height={300}
+        />
+      </div>
+
+      <div className="p-2 sm:p-5 w-full sm:w-1/3">
         <form className="flex items-center max-w-sm mx-auto w-full">
           <label htmlFor="simple-search" className="sr-only">
             Search
@@ -57,21 +67,44 @@ const Header: React.FC = () => {
           </button>
         </form>
       </div>
-      <div className="w-1/3">
-     
-      <button
-      type="button"
-      className="flex items-center p-2 text-black bg-black rounded-lg hover:bg-blue-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-    >
-      <img
-        src="https://static-assets-web.flixcart.com/batman-returns/batman-returns/p/images/profile-52e0dc.svg"
-        alt="Login Icon"
-        className="w-5 h-5 mr-2"
-      />
-      Login
-    </button>
-      </div>
 
+      <div className="w-full sm:w-1/3 p-2 sm:p-5 sm:justify-around">
+        <span className="flex flex-wrap space-x-2 justify-around">
+          <button
+            type="button"
+            className="flex items-center p-2 text-black border-2 rounded-lg hover:bg-blue-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            <img
+              src="https://static-assets-web.flixcart.com/batman-returns/batman-returns/p/images/profile-52e0dc.svg"
+              alt="Login Icon"
+              className="w-5 h-5 mr-2"
+            />
+            <span className="hidden sm:inline">Login</span>
+          </button>
+          <button
+            type="button"
+            className="flex items-center p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/1170/1170678.png"
+              alt="Shopping Basket Icon"
+              className="w-5 h-5 mr-2"
+            />
+            <span className="hidden sm:inline">Cart</span>
+          </button>
+          <button
+            type="button"
+            className="flex items-center p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            <img
+              src="https://static-assets-web.flixcart.com/batman-returns/batman-returns/p/images/Store-9eeae2.svg"
+              alt="Become a Seller Icon"
+              className="w-5 h-5 mr-2"
+            />
+            <span className="hidden sm:inline">Become a seller</span>
+          </button>
+        </span>
+      </div>
     </div>
   );
 };

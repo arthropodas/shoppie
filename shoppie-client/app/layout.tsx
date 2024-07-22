@@ -21,7 +21,10 @@ export default function RootLayout({
       
       <body className={inter.className}>
         <Header/>
+        <div className="max-sm:h-20 h-52   m-16">
+
         {children}
+        </div>
         
         </body>
    

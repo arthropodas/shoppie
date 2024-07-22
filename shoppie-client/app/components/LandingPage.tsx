@@ -1,14 +1,25 @@
 import React from "react";
 import { Text, TextInput } from "@mantine/core";
+import Banner from "./Banner";
+import BannerSlider from "./BannerSlider";
 
 const LandingPage: React.FC = () => {
   return (
-    <div className=" max-sm:h-20 h-52  bg-pink-500">
-      landing page
+    <>
+    
+    
+    
+    <Banner/>
+    <div className="">
+      <></>
+   
+    
       <div>
+        <BannerSlider/>
        
       </div>
     </div>
+    </>
   );
 };
 
