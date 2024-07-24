@@ -2,7 +2,7 @@ import React from "react";
 import BannerContents from "./BannerContents";
 const Banner: React.FC = () => {
   return (
-    <div className="flex gap-3 justify-evenly w-full min-h-24 p-1">
+    <div className="flex gap-3 dark:bg-gray-700 dark:text-white justify-evenly w-full min-h-24 p-1">
       <BannerContents
         imageSrc="/images/topoffer.webp" // Path to your image
         altText="Top Offer" // Alt text for accessibility
