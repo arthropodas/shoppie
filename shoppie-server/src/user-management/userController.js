@@ -118,12 +118,68 @@ const refresh = asyncHandler(async (req, res, next) => {
   }
 });
 
+const googleSignIn = async(req,res)=>{
+
+  const {email,firstName}= req.body
+  const customer = await Customer.findOne({email})
+  if(customer){
+ const accessToken = jwt.sign({
+    user:{
+        firstName: customer.firstName,
+        lastName:customer.lastName,
+        custId: customer.cust_id
+    }
+},process.env.ACCESS_TOKEN_SECRET,{
+    expiresIn:'1m'
+})
+
+const refreshToken= jwt.sign({
+  user: {
+      firstName: customer.firstName,
+      lastName: customer.lastName,
+      custId: customer.cust_id,
+  }
+}, process.env.REFRESH_TOKEN_SECRET, {
+  expiresIn: '2m'
+});
+
+return res.status(200).json({ accessToken:accessToken, refreshToken  });
+ 
+  }else{
+    const newCustomer = new Customer({
+      firstName,
+      email,
+    });
+   try{
+    const response = await newCustomer.save();
+    console.log(response);
+   }catch(err){
+    console.log(err);
+   }
+  }
+
+}
+
+const getUserByEmail=async(req,res)=>{
+
+  const email = req.body.email
+  console.log(email);
+  try{
+  const result = await Customer.findOne({email})
+  console.log("result",result);
+  return res.send('ok')}catch(err){
+    console.log(err);
+  }res.send('no')
+
+}
+
 
 module.exports = {
   getAllUsers,
   getUserById,
   registerUser,
   login,
-  refresh
+  refresh,
+  googleSignIn,getUserByEmail
 };
 

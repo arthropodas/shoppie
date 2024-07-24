@@ -16,7 +16,7 @@ export default function RootLayout({
 
   const pathname= usePathname();
 
- console.log(pathname);
+
  
   
  
@@ -25,12 +25,13 @@ export default function RootLayout({
  
      
        <head><title>Shoppie</title>
-       <link rel="icon" href="/favicon.ico" />
+       <link rel="icon" href="/shoppie.ico" />
        </head>
 
         
       <body>
-      {pathname !== '/login' && <Header />}
+      {pathname !== '/login' && pathname !== '/register' && <Header />}
+
         {children}
      
       </body>
