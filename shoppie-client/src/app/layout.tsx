@@ -18,7 +18,9 @@ export default function RootLayout({
 
   console.log(pathname);
 
-  const pathname= usePathname();
+  console.log(pathname);
+
+  console.log(pathname);
 
 
  
