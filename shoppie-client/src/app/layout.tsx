@@ -1,20 +1,26 @@
-
-"use client"
-import React from 'react';
-import './globals.css'
-import Header from '@/src/components/Home/Header';
-import { usePathname } from 'next/navigation';
-
+"use client";
+import React from "react";
+import "./globals.css";
+import Header from "@/src/components/Home/Header";
+import { usePathname } from "next/navigation";
+import { Providers } from "./providers";
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode
+  children: React.ReactNode;
+
 }>) {
+  const pathname = usePathname();
 
-  
 
-  const pathname= usePathname();
+  console.log(pathname);
+
+  console.log(pathname);
+
+  console.log(pathname);
+
+  console.log(pathname);
 
 
  
@@ -28,11 +34,13 @@ export default function RootLayout({
        <link rel="icon" href="/shoppie.ico" />
        </head>
 
-        
       <body>
+        <Providers>
+
       {pathname !== '/login' && pathname !== '/register' && <Header />}
 
         {children}
+        </Providers>
      
       </body>
     </html>
