@@ -9,8 +9,12 @@ export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
+
 }>) {
   const pathname = usePathname();
+
+
+  console.log(pathname);
 
   console.log(pathname);
 
