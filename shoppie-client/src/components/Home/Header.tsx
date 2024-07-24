@@ -2,7 +2,8 @@ import Themeswitcher from "../ThemeSwitch";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import { FiLogIn, FiMoon, FiShoppingBag, FiShoppingCart } from "react-icons/fi";
+import { FiLogIn, FiMoon, FiPhone, FiShoppingBag, FiShoppingCart } from "react-icons/fi";
+import { IoPersonCircleOutline } from "react-icons/io5";
 
 const Header: React.FC = () => {
   return (
@@ -78,11 +79,8 @@ const Header: React.FC = () => {
             type="button"
             className="flex items-center p-2  border-2 rounded-lg hover:bg-blue-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
-            <img
-              src="https://static-assets-web.flixcart.com/batman-returns/batman-returns/p/images/profile-52e0dc.svg"
-              alt="Login Icon"
-              className="w-5 h-5 mr-2"
-            />
+            <IoPersonCircleOutline className="w-5 h-5 mr-2"  />
+       
           <span className="hidden sm:inline">Login</span>
           </button>
           </Link>  

@@ -35,9 +35,12 @@ export default function RootLayout({
        </head>
 
       <body>
+        <Providers>
+
       {pathname !== '/login' && pathname !== '/register' && <Header />}
 
         {children}
+        </Providers>
      
       </body>
     </html>
