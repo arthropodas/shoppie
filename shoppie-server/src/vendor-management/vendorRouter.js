@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const {registerVender,} = require("./venderController");
+const {registerVender,} = require("./vendorController");
 // const validateToken = require("../auth");
 console.log("Inside the authenticationRoutes");
 

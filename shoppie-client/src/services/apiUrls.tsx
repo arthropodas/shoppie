@@ -23,4 +23,11 @@ const userService={
     login,getUsers,register,googleSignIn
 }
 
-export {userService}
+const vendorRegister = (data:any)=>{
+    return axiosPrivate.post<any>('vendors/register', data)
+}
+const vendorService={
+    vendorRegister
+}
+
+export {userService,vendorService}
