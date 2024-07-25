@@ -4,13 +4,14 @@ import { initializeApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider } from "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBn3Ee663RyokL7sY3ekIZ-GJTPdkLc2wY",
-  authDomain: "shoppie-44b66.firebaseapp.com",
-  projectId: "shoppie-44b66",
-  storageBucket: "shoppie-44b66.appspot.com",
-  messagingSenderId: "67450415003",
-  appId: "1:67450415003:web:6f8cd8a939e9b95858233e"
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTHDOMAIN,
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECTID,
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGEBUCKET,
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_SENDERID ,
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APPID 
 };
+
 
 
 const app = initializeApp(firebaseConfig);

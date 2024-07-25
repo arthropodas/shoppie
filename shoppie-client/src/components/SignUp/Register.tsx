@@ -10,6 +10,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import * as Yup from 'yup';
 import Swal from 'sweetalert2'
 import Link from 'next/link'
+import { useShoppieStore } from '@/src/store/shoppieStore'
 
 
 
@@ -35,6 +36,8 @@ const Register:React.FC=()=>{
 
     const router = useRouter()
 
+    const {setCustId} = useShoppieStore()
+
     const {googleData} = useGoogleSignIn()
 
     const {register,handleSubmit,reset,formState:{errors,isValid}}=useForm({
@@ -50,15 +53,18 @@ const Register:React.FC=()=>{
         try{
             const res= await userService.register(data)
             console.log(res);
-            if(res.status===201){
+            if(res.status===200){
                 Swal.fire({
                     position: "top-end",
                     icon: "success",
-                    title: "User Registered Successfully",
+                    title: res.data.message,
                     showConfirmButton: false,
                     timer: 1500
                   });
-                  router.push('/')
+
+                 setCustId(res.data.customerId)
+
+                //   router.push('/login')
             }
             
         }catch(error){

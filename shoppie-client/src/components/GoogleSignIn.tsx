@@ -33,6 +33,10 @@ const useGoogleSignIn=()=>{
          try{
              const res = await userService.googleSignIn(dataToSend)
             if(res.status==200){
+                         
+              const tokens = JSON.stringify(res.data);
+      
+              localStorage.setItem('token', tokens);
              router.push('/')
             }
              

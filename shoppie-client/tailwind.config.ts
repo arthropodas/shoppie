@@ -18,6 +18,11 @@ const config = {
       },
     },
     extend: {
+      height:{
+
+        
+        'screen-minus-20': 'calc(100vh - 5.5rem)',
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
