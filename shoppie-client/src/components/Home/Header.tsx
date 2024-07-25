@@ -1,10 +1,13 @@
+import Themeswitcher from "../ThemeSwitch";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import { FiLogIn, FiMoon, FiPhone, FiShoppingBag, FiShoppingCart } from "react-icons/fi";
+import { IoPersonCircleOutline } from "react-icons/io5";
 
 const Header: React.FC = () => {
   return (
-    <div className="min-h-20 bg-slate-100 flex flex-wrap justify-between items-center px-4">
+    <div className="min-h-20 dark:bg-gray-900 dark:text-white  bg-slate-100 flex flex-wrap justify-between items-center px-4">
       <div className="pl-24">
         <Image
           src="/images/shoppielogo.png" // Path relative to the public directory
@@ -47,7 +50,7 @@ const Header: React.FC = () => {
           </div>
           <button
             type="submit"
-            className="p-2.5 ml-2 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            className="p-2.5 ml-2 text-sm font-medium  text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
           >
             <svg
               className="w-4 h-4"
@@ -74,37 +77,31 @@ const Header: React.FC = () => {
         <Link href='/login'>
           <button
             type="button"
-            className="flex items-center p-2 text-black border-2 rounded-lg hover:bg-blue-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="flex items-center p-2  border-2 rounded-lg hover:bg-blue-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
-            <img
-              src="https://static-assets-web.flixcart.com/batman-returns/batman-returns/p/images/profile-52e0dc.svg"
-              alt="Login Icon"
-              className="w-5 h-5 mr-2"
-            />
+            <IoPersonCircleOutline className="w-5 h-5 mr-2"  />
+       
           <span className="hidden sm:inline">Login</span>
           </button>
           </Link>  
           <button
             type="button"
-            className="flex items-center p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="flex  items-center p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
-            <img
-              src="https://cdn-icons-png.flaticon.com/512/1170/1170678.png"
-              alt="Shopping Basket Icon"
-              className="w-5 h-5 mr-2"
-            />
+      
+
+            <FiShoppingCart className="w-5 h-5 mr-2" />
             <span className="hidden sm:inline">Cart</span>
           </button>
           <button
             type="button"
             className="flex items-center p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
-            <img
-              src="https://static-assets-web.flixcart.com/batman-returns/batman-returns/p/images/Store-9eeae2.svg"
-              alt="Become a Seller Icon"
-              className="w-5 h-5 mr-2"
-            />
+            <FiShoppingBag className="w-5 h-5 mr-2" />
             <span className="hidden sm:inline">Become a seller</span>
+          </button>
+          <button>
+            <Themeswitcher />
           </button>
         </span>
       </div>

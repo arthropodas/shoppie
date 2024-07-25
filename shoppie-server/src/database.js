@@ -16,7 +16,7 @@ const uri = `mongodb+srv://${username}:${password}@${clusterUrl}/?retryWrites=tr
     console.log('Connected to MongoDB');
   } catch (err) {
     console.error('Error connecting to MongoDB', err);
-    process.exit(1); // Exit process with failure
+    process.exit(1);
   }
 };
 
