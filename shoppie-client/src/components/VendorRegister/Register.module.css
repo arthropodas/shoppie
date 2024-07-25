@@ -1,0 +1,186 @@
+.container{
+    /* background-color: coral;  */
+    height: 100vh;
+    width:100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+
+.item{
+    width: 120vh;
+    height:700px;
+    /* border:1px solid blue; */
+    display: flex;
+    justify-content:space-between;
+    gap:10px;
+    
+}
+
+.left{
+/* border:1px solid yellow; */
+width:60vh;
+display: flex;
+justify-content: center;
+align-items: center;
+
+}
+
+.left img{
+    /* border:1px solid red; */
+    height: 500px;
+    width:500px;
+}
+.right{
+    /* border:1px solid red;    */
+    
+    width:60vh;
+    display: flex;
+    /* justify-content: center; */
+    align-items: center;
+    flex-direction: column;
+    /* box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; */
+    
+   
+}
+
+.right h3{
+    margin-top: 20px;
+    font-weight: bold;
+    font-size: 30px;
+    color:coral;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.right form{
+
+    
+    margin-top: 15px;
+     display: flex; 
+     flex-direction: column;  
+   
+
+}
+
+
+
+.inputGroup{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+
+
+}
+.inputGroup input{
+ 
+    padding: 10px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    border-radius: 8px;
+    outline: none;
+    margin-bottom: 0;
+}
+
+
+
+
+
+.right form ::placeholder{
+    color:black;
+    font-size: 15px;
+
+  
+}
+
+
+.gender{
+    display: flex;
+    gap:10px;
+    align-items: center;
+    font-size: 15px;
+}
+
+.right form button{
+    background-color: coral;
+    padding: 10px;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+/* .right form button:hover{
+    background-color: aqua;
+
+} */
+
+
+.right form button:disabled{
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+
+.errors{
+
+    color:red;
+    margin-top: 5px;
+    font-size: 12px;
+
+}
+
+.gender input {
+    margin-right: 5px;
+}
+
+.gender label {
+    margin-right: 20px;
+}
+
+@media (max-width:1125px){
+
+  .conatiner,.left,.right{
+    width:100%; 
+  }
+
+ 
+  
+}
+
+@media(max-width:600px){
+
+    
+
+    .item{
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        justify-content: flex-start;
+    
+    }
+    .left{
+        margin-top:40px;
+    }
+ 
+    .left img{
+        width: 200px;
+        height:200px;
+        margin-bottom: 0;
+    }
+    .right form{
+        margin-top:0;
+        display: flex;
+        
+    }
+
+   
+    
+}
+
+
+@media(width:344px){
+
+    .left{
+        margin-top: 1px;
+    }
+}
