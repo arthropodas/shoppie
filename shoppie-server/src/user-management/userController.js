@@ -1,9 +1,16 @@
 const Customer = require("./userSchema");
 const shortid = require("shortid");
 const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
-require("dotenv").config();
+const jwt = require("jsonwebtoken")
+const { validateLoginForm } = require('../utils/validation');
+require('dotenv').config(); 
 const asyncHandler = require("express-async-handler");
+const { generateToken } = require("../utils/tokens");
+
+
+
+const{mailOptions,transporter} = require('../utils/Email/emailConfig')
+// import { validationResult } from 'express-validator';
 
 const registerUser = asyncHandler(async (req, res, next) => {
   const { firstName, lastName, email, dob, gender, address, password } =
@@ -28,14 +35,16 @@ const registerUser = asyncHandler(async (req, res, next) => {
       password: hashedPassword,
       cust_id,
     });
-    await newCustomer.save();
 
-    res
-      .status(201)
-      .json({
-        message: "Customer created successfully",
-        customer: newCustomer,
-      });
+    const options = mailOptions(newCustomer)
+    console.log(options);
+     const result = await transporter.sendMail(options)
+      if(result){
+        await newCustomer.save();
+        res.status(200).json({ message: 'Please check you mail to verify',customerId:cust_id});
+      }
+
+    
   } catch (err) {
     next(err);
   }
@@ -65,48 +74,67 @@ const getUserById = asyncHandler(async (req, res, next) => {
   }
 });
 
-const login = asyncHandler(async (req, res, next) => {
-  const { email, password } = req.body;
+const login =async(req,res)=>{
+  
+  const result= validateLoginForm(req.body)
+    if (result){
+      return res.status(400).send(result);
+    }
+    const customer = await Customer.findOne({email:req.body.email,isVerified:1})
+    if(!customer){
+      return res.status(404).json({errorCode:'E101', msg:"User not found"})
+    }
+    if(await bcrypt.compare(req.body.password, customer.password)){
+     
+      console.log(customer);
+      const token = generateToken(customer);
+      return res.status(200).send(token)
+  
 
-  console.log("data from client :", req.body);
-  if (!email || !password) {
-    return res
-      .status(400)
-      .json({ message: "Both email and password are required" });
-  }
-  customer = await Customer.findOne({ email });
-  if (customer && (await bcrypt.compare(password, customer.password))) {
-    const accessToken = jwt.sign(
-      {
-        user: {
-          firstName: customer.firstName,
-          lastName: customer.lastName,
-          custId: customer.cust_id,
-        },
-      },
-      process.env.ACCESS_TOKEN_SECRET,
-      {
-        expiresIn: "1m",
-      }
-    );
-    const refreshToken = jwt.sign(
-      {
-        user: {
-          firstName: customer.firstName,
-          lastName: customer.lastName,
-          custId: customer.cust_id,
-        },
-      },
-      process.env.REFRESH_TOKEN_SECRET,
-      {
-        expiresIn: "2m",
-      }
-    );
-    return res.status(200).json({ accessToken: accessToken, refreshToken });
-  } else {
-    return res.status(404).json({ message: "Invalid credentials" });
-  }
-});
+}else{
+  return res.status(404).json({errorCode:'E102',msg:"Invalid credentials"})
+}
+   
+  
+      
+     
+
+
+}
+
+// const login = asyncHandler(async(req,res,next)=>{
+//     const {email, password} = req.body
+
+//     console.log("data from client :",req.body);
+//     if(!email || !password){
+//         return res.status(400).json({ message: 'Both email and password are required' });
+//     }
+//     customer = await Customer.findOne({email})
+//     if(customer && (await bcrypt.compare(password,customer.password))){
+//         const accessToken = jwt.sign({
+//             user:{
+//                 firstName: customer.firstName,
+//                 lastName:customer.lastName,
+//                 custId: customer.cust_id
+//             }
+//         },process.env.ACCESS_TOKEN_SECRET,{
+//             expiresIn:'1m'
+//         })
+//         const refreshToken = jwt.sign({
+//           user: {
+//               firstName: customer.firstName,
+//               lastName: customer.lastName,
+//               custId: customer.cust_id,
+//           }
+//       }, process.env.REFRESH_TOKEN_SECRET, {
+//           expiresIn: '2m'
+//       });
+//         return res.status(200).json({ accessToken:accessToken,refreshToken  });
+//     }
+//     else{
+//         return res.status(404).json({ message: 'Invalid credentials' });
+//     }
+// })
 const refresh = asyncHandler(async (req, res, next) => {
   const { token } = req.body;
 
@@ -141,38 +169,22 @@ const googleSignIn = async(req,res)=>{
   const {email,firstName}= req.body
   const customer = await Customer.findOne({email})
   if(customer){
- const accessToken = jwt.sign({
-    user:{
-        firstName: customer.firstName,
-        lastName:customer.lastName,
-        custId: customer.cust_id
-    }
-},process.env.ACCESS_TOKEN_SECRET,{
-    expiresIn:'1m'
-})
+    const token = generateToken(customer);
 
-const refreshToken= jwt.sign({
-  user: {
-      firstName: customer.firstName,
-      lastName: customer.lastName,
-      custId: customer.cust_id,
-  }
-}, process.env.REFRESH_TOKEN_SECRET, {
-  expiresIn: '2m'
-});
-
-return res.status(200).json({ accessToken:accessToken, refreshToken  });
+    return res.status(200).send(token);
  
   }else{
     const newCustomer = new Customer({
       firstName,
       email,
     });
+    
    try{
     const response = await newCustomer.save();
-    console.log(response);
+    const token = generateToken(response);
+    return res.status(200).send(token);
    }catch(err){
-    console.log(err);
+    return res.status(400).send(err);
    }
   }
 
@@ -192,11 +204,56 @@ const getUserByEmail=async(req,res)=>{
 }
 
 
+// const email = transporter.sendMail(mailOptions, (err, data)=>{
+//   if (err) {
+//     console.log("Error " + err);
+//   } else {
+//     console.log("Email sent successfully");
+//   }
+// });
+
+const email = async(req,res)=>{
+  try{
+   
+
+    const options = mailOptions('manusparappattu@gmail.com','Email verification',"ekjwnf")
+    console.log(options);
+     const result = await transporter.sendMail(options)
+    console.log(result);
+      
+  
+}catch(err){
+  return res.send(err)
+}
+}
+
+
+const verifyEmail =async(req,res)=>{
+  const {id} = req.params;
+  try{
+    const user = await Customer.findOne({cust_id:id})
+    if(user){
+      user.isVerified=1;
+      await user.save();
+      return res.status(200).send('Email verified')
+      
+    }else{
+      return res.status(400).send('Email not verified')
+    }
+  }catch(err){
+    return res.status(400).send(err)
+  }
+}
+
+
+
 module.exports = {
   getAllUsers,
   getUserById,
   registerUser,
   login,
   refresh,
-  googleSignIn,getUserByEmail
+  googleSignIn,getUserByEmail,
+  email,
+  verifyEmail
 };
