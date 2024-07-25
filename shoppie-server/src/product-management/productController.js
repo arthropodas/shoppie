@@ -1,11 +1,9 @@
 const ProductCategory = require("./productSchema").ProductCategory; // Adjust path as needed
 const Product = require("./productSchema").Product; // Adjust path as needed
-const Vender = require("../vender-management/venderSchema");
+const Vendor = require("../vendor-management/vendorSchema");
 const shortid = require("shortid");
 const asyncHandler = require("express-async-handler");
 const validateId = require("./productsValidators");
-
-// Add Product Category Controller
 const addProductCategory = asyncHandler(async (req, res) => {
   const { name } = req.body;
 

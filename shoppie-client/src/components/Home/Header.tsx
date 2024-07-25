@@ -1,16 +1,22 @@
+
 import Themeswitcher from "../ThemeSwitch";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { FiLogIn, FiMoon, FiPhone, FiShoppingBag, FiShoppingCart } from "react-icons/fi";
 import { IoPersonCircleOutline } from "react-icons/io5";
-
+import { VscAccount } from "react-icons/vsc";
 const Header: React.FC = () => {
+  let loggedIn = false;
+
+  if (typeof window !== "undefined") {
+    loggedIn = !!localStorage.getItem('authTokens');
+  }
   return (
     <div className="min-h-20 dark:bg-gray-900 dark:text-white  bg-slate-100 flex flex-wrap justify-between items-center px-4">
       <div className="pl-24">
         <Image
-          src="/images/shoppielogo.png" // Path relative to the public directory
+          src="/images/shoppielogo.png" 
           alt="Shop Logo"
           width={150}
           height={300}
@@ -77,7 +83,7 @@ const Header: React.FC = () => {
         <Link href='/login'>
           <button
             type="button"
-            className="flex items-center p-2  border-2 rounded-lg hover:bg-blue-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="flex items-center p-2 dark:border-white border-2 rounded-lg hover:bg-blue-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
             <IoPersonCircleOutline className="w-5 h-5 mr-2"  />
        
@@ -93,6 +99,7 @@ const Header: React.FC = () => {
             <FiShoppingCart className="w-5 h-5 mr-2" />
             <span className="hidden sm:inline">Cart</span>
           </button>
+          <Link href="/vendor-register">
           <button
             type="button"
             className="flex items-center p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -100,9 +107,16 @@ const Header: React.FC = () => {
             <FiShoppingBag className="w-5 h-5 mr-2" />
             <span className="hidden sm:inline">Become a seller</span>
           </button>
-          <button>
+          </Link>
+          <button className="order-none">
             <Themeswitcher />
           </button>
+
+          {loggedIn && (
+        <button>
+          <VscAccount className="w-10 h-10" />
+        </button>
+      )}
         </span>
       </div>
     </div>

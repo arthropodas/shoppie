@@ -1,14 +1,12 @@
-const { required } = require("joi");
 const mongoose = require("mongoose");
 const shortid = require("shortid");
 
-const venderSchema = new mongoose.Schema(
+const vendorSchema = new mongoose.Schema(
   {
-    venderName: {
+    name: {
       type: String,
       required: true,
     },
-
     email: {
       type: String,
       required: true,
@@ -18,9 +16,9 @@ const venderSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    userType:{
-        type:String,
-        required:true
+    userType: {
+      type: String,
+      required: true,
     },
     vendId: {
       type: String,
@@ -36,10 +34,10 @@ const venderSchema = new mongoose.Schema(
   },
   {
     timestamps: true,
-    collection: "venders",
+    collection: "vendors",
   }
 );
 
-const Vendor = mongoose.model("Vendors", venderSchema);
+const Vendor = mongoose.model("Vendor", vendorSchema);
 
 module.exports = Vendor;

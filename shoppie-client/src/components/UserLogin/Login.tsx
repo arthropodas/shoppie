@@ -1,89 +1,80 @@
-"use client"
+"use client";
 
-import React from 'react';
-import { useRouter } from 'next/navigation';
-import { userService } from '@/src/services/apiUrls';
-import { useShoppieStore } from '@/src/store/shoppieStore';
-import Swal from 'sweetalert2';
-import Link from 'next/link';
-import {useForm} from 'react-hook-form'
-import GoogleButton from 'react-google-button';
-import useGoogleSignIn from '../GoogleSignIn';
+import React from "react";
+import { useRouter } from "next/navigation";
+import { userService } from "@/src/services/apiUrls";
+import { useShoppieStore } from "@/src/store/shoppieStore";
+import Swal from "sweetalert2";
+import Link from "next/link";
+import { useForm } from "react-hook-form";
+import GoogleButton from "react-google-button";
+import useGoogleSignIn from "../GoogleSignIn";
 
-import * as Yup from 'yup';
+import * as Yup from "yup";
 
-import { yupResolver } from '@hookform/resolvers/yup';
+import { yupResolver } from "@hookform/resolvers/yup";
 
-
-const Schema=Yup.object().shape({
-  email:Yup.string().email('Invalid email').required('Email is required'),
-  password:Yup.string().required('Password is required')
-})
+const Schema = Yup.object().shape({
+  email: Yup.string().email("Invalid email").required("Email is required"),
+  password: Yup.string().required("Password is required"),
+});
 
 interface FormData {
   email: string;
   password: string;
 }
 
-
-
 const Login: React.FC = () => {
   const router = useRouter();
 
-  const {googleData} = useGoogleSignIn()
+  const { googleData } = useGoogleSignIn();
 
-  const { register, handleSubmit,reset, formState: { errors, isValid } } = useForm<FormData>({
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isValid },
+  } = useForm<FormData>({
     resolver: yupResolver(Schema),
-    mode: 'onChange',
+    mode: "onChange",
   });
 
-  const {login }= useShoppieStore()
+  const { login } = useShoppieStore();
 
-  
-
-
-  
-
-  
-
-
-
-  const LoginForm = async (data:FormData) => {
-   
+  const LoginForm = async (data: FormData) => {
     try {
       const res = await userService.login(data);
-      
+
       if (res.status === 200) {
-       Swal.fire({
-          position: 'center',
-          icon: 'success',
-          title: 'Login Successful',
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Login Successful",
           showConfirmButton: false,
-          timer: 1500
-        })
-        router.push('/')
-        
+          timer: 1500,
+        });
+        router.push("/");
+
         login();
         const tokens = JSON.stringify(res.data);
         console.log(res.data);
-        localStorage.setItem('token', tokens);
+        localStorage.setItem("token", tokens);
       }
     } catch (err) {
       Swal.fire({
-        position: 'center',
-        icon: 'error',
-        title: 'Invalid credentials',
+        position: "center",
+        icon: "error",
+        title: "Invalid credentials",
         showConfirmButton: false,
-        timer: 1500
-      })
-    }finally{
-      reset()
+        timer: 1500,
+      });
+    } finally {
+      reset();
     }
   };
 
   return (
     <div>
-      
       <section className="bg-gray-50 dark:bg-gray-900">
         <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
           <a
@@ -102,7 +93,10 @@ const Login: React.FC = () => {
               <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                 Sign in to your account
               </h1>
-              <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit(LoginForm)}>
+              <form
+                className="space-y-4 md:space-y-6"
+                onSubmit={handleSubmit(LoginForm)}
+              >
                 <div>
                   <label
                     htmlFor="email"
@@ -112,14 +106,15 @@ const Login: React.FC = () => {
                   </label>
                   <input
                     type="email"
-                    
-                    
                     className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="name@company.com"
-                  
-                    {...register('email')}
+                    {...register("email")}
                   />
-                  {errors.email && <p className='text-red-500 text-sm'>{errors.email.message}</p>}
+                  {errors.email && (
+                    <p className="text-red-500 text-sm">
+                      {errors.email.message}
+                    </p>
+                  )}
                 </div>
                 <div>
                   <label
@@ -130,17 +125,18 @@ const Login: React.FC = () => {
                   </label>
                   <input
                     type="password"
-                    
                     id="password"
                     placeholder="•••••••"
                     className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                   
-                    {...register('password')}
+                    {...register("password")}
                   />
-                  {errors.password && <p className='text-red-500 text-sm '>{errors.password.message}</p>}
+                  {errors.password && (
+                    <p className="text-red-500 text-sm ">
+                      {errors.password.message}
+                    </p>
+                  )}
                 </div>
                 <div className="flex items-center justify-between">
-                  
                   <a
                     href="#sdnfjn"
                     className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500"
@@ -151,23 +147,21 @@ const Login: React.FC = () => {
                 <button
                   type="submit"
                   className="w-full text-white bg-blue-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-                disabled={!isValid}
+                  disabled={!isValid}
                 >
                   Sign in
                 </button>
-             
               </form>
-              <GoogleButton onClick={googleData}/>
+              <GoogleButton onClick={googleData} />
               <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-                  Don’t have an account yet?{" "}
-                  <Link
-                    href="/register"
-                    className="font-medium text-primary-600 hover:underline dark:text-primary-500"
-                  >
-                    Sign up
-                  </Link>
-                </p>
-             
+                Don’t have an account yet?{" "}
+                <Link
+                  href="/register"
+                  className="font-medium text-primary-600 hover:underline dark:text-primary-500"
+                >
+                  Sign up
+                </Link>
+              </p>
             </div>
           </div>
         </div>

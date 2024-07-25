@@ -10,7 +10,9 @@ const login = (data:any)=>{
 const register = (data:any)=>{
     return axiosPrivate.post<any>('users/register', data)
 }
-
+const vendorRegister = (data:any)=>{
+    return axiosPrivate.post<any>('vendors/register', data)
+}
 const getUsers = ()=>{
     return axiosPrivate.get<any>('users/get')
 }
@@ -23,4 +25,8 @@ const userService={
     login,getUsers,register,googleSignIn
 }
 
-export {userService}
+const vendorService={
+    vendorRegister
+}
+
+export {userService,vendorService}

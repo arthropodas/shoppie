@@ -3,7 +3,7 @@ import React from "react";
 import styles from "./Register.module.css";
 import GoogleButton from "react-google-button";
 import useGoogleSignIn from "../GoogleSignIn";
-import { userService } from "@/src/services/apiUrls";
+import { vendorService } from "@/src/services/apiUrls";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -12,23 +12,19 @@ import Swal from "sweetalert2";
 import Link from "next/link";
 
 interface RegisterData {
-  firstName: string;
-  lastName: string;
+  name: string;
+  address: string;
   email: string;
-  dob: string;
-  gender: number;
   password: string;
 }
 
 const Schema = Yup.object().shape({
-  firstName: Yup.string().required("First Name is required"),
-  lastName: Yup.string().required("Last Name is required"),
+  name: Yup.string().required("vendor Name is required"),
+  address: Yup.string().required("Last Name is required"),
   email: Yup.string().email("Invalid email").required("Email is required"),
-  dob: Yup.string().required("Date of Birth is required"),
-  gender: Yup.number().required("Gender is required"),
   password: Yup.string().required("Password is required").min(6, "ejejgj"),
 });
-const Register: React.FC = () => {
+const VendorRegister: React.FC = () => {
   const router = useRouter();
 
   const { googleData } = useGoogleSignIn();
@@ -45,24 +41,27 @@ const Register: React.FC = () => {
 
   const handleRegistartion = async (data: RegisterData) => {
     try {
-        console.log("daata", data)
-      const res = await userService.register(data);
+      console.log("daata", data);
+      const res = await vendorService.vendorRegister(data);
       console.log(res);
       if (res.status === 201) {
         Swal.fire({
           position: "top-end",
           icon: "success",
-          title: "User Registered Successfully",
+          title: "Vendor Registered Successfully",
           showConfirmButton: false,
           timer: 1500,
         });
         router.push("/");
       }
-    } catch (error) {
+    } catch (error:any) {
+      console.log("error............",error)
+      console.log("error data............",error?.response?.data?.message)
+
       Swal.fire({
         position: "center",
         icon: "error",
-        title: "Something went wrong",
+        title:error?.response?.data?.message,
         showConfirmButton: false,
         timer: 1500,
       });
@@ -80,19 +79,19 @@ const Register: React.FC = () => {
           />
         </div>
         <div className={`${styles.right}`}>
-          <h3>Sign Up</h3>
+          <h3>Sign Up For Vendors</h3>
           <form onSubmit={handleSubmit(handleRegistartion)}>
             <div className={styles.inputGroup}>
               <input
-                className=" dark:placeholder-gray-400"
+                className="dark:placeholder-gray-400"
                 type="text"
-                placeholder="firstname"
-                {...register("firstName")}
+                placeholder="name"
+                {...register("name")}
               />
 
-              {errors.firstName && (
+              {errors.name && (
                 <span className={styles.errors}>
-                  {errors.firstName?.message}
+                  {errors.name?.message}
                 </span>
               )}
             </div>
@@ -101,13 +100,11 @@ const Register: React.FC = () => {
               <input
                 className=" dark:placeholder-gray-400"
                 type="text"
-                placeholder="lastname"
-                {...register("lastName")}
+                placeholder="address"
+                {...register("address")}
               />
-              {errors.lastName && (
-                <span className={styles.errors}>
-                  {errors.lastName?.message}
-                </span>
+              {errors.address && (
+                <span className={styles.errors}>{errors.address?.message}</span>
               )}
             </div>
             <div className={styles.inputGroup}>
@@ -121,26 +118,7 @@ const Register: React.FC = () => {
                 <span className={styles.errors}>{errors.email?.message}</span>
               )}
             </div>
-            <div className={styles.inputGroup}>
-              <input
-                type="date"
-                className=" dark:placeholder-gray-400"
-                placeholder="Dob"
-                {...register("dob")}
-              />
-              {errors.dob && (
-                <span className={styles.errors}>{errors.dob?.message}</span>
-              )}
-            </div>
-            <div className={styles.inputGroup}>
-              <div className={styles.gender}>
-                <input type="radio" value={1} {...register("gender")} /> Male
-                <input type="radio" value={0} {...register("gender")} /> Female
-              </div>
-              {errors.gender && (
-                <span className={styles.errors}>{errors.gender?.message}</span>
-              )}
-            </div>
+
             <div className={styles.inputGroup}>
               <input
                 className=" dark:placeholder-gray-400"
@@ -176,4 +154,4 @@ const Register: React.FC = () => {
   );
 };
 
-export default Register;
+export default VendorRegister;
