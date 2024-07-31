@@ -6,9 +6,6 @@ const { validateLoginForm } = require('../utils/validation');
 require('dotenv').config(); 
 const asyncHandler = require("express-async-handler");
 const { generateToken } = require("../utils/tokens");
-
-
-
 const{mailOptions,transporter} = require('../utils/Email/emailConfig')
 // import { validationResult } from 'express-validator';
 

@@ -3,3 +3,8 @@ interface BannerContentsProps {
     altText: string;
     text: string;
   }
+
+  interface VerifyEmailResponse {
+    message: string;
+  }
+  

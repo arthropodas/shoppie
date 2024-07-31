@@ -47,15 +47,15 @@ const VendorRegister: React.FC = () => {
       console.log("daata", data);
       const res = await vendorService.vendorRegister(data);
       console.log(res);
-      if (res.status === 201) {
+      if (res.status === 200) {
         Swal.fire({
           position: "top-end",
           icon: "success",
-          title: "Vendor Registered Successfully",
+          title: res.data.message,
           showConfirmButton: false,
           timer: 1500,
         });
-        router.push("/");
+        
       }
     } catch (error: any) {
       console.log("error............", error);
