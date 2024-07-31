@@ -22,8 +22,12 @@ export default function VerifyEmail() {
 
         try {
             console.log(" token is availabel",email); 
+            const verifyData = {
+                email: email,
+                token:token.token
+            }
           
-            const response = await vendorService.verifyEmail( email , token.token); 
+            const response = await vendorService.verifyEmail( verifyData); 
             console.log("Response is", response);
             Swal.fire({
                 position: "top-end",
@@ -33,7 +37,14 @@ export default function VerifyEmail() {
                 timer: 1500,
               });
         } catch (error:any) {
-            console.error('There was an error!',error);
+            Swal.fire({
+                position: "top-end",
+                icon: "error",
+                title: error.response.data.message,
+                showConfirmButton: false,
+                timer: 1500,
+              });
+          
      
         }
     };

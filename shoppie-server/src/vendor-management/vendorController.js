@@ -16,7 +16,7 @@ const registerVender = asyncHandler(async (req, res, next) => {
   // Validate the input
   const invalid = vendorValidation(req.body);
   if (invalid) {
-    console.log("Invalid input:", invalid);
+   
     return res.status(400).json(invalid);
   }
 
@@ -56,7 +56,6 @@ const registerVender = asyncHandler(async (req, res, next) => {
     res.status(200).json({ message: "Please check your mail to verify", venderId: vendId });
 
   } catch (err) {
-    console.error("Error during registration:", err);
     res.status(400).json({ message: err.message });
     next(err);
   }
@@ -67,12 +66,9 @@ const resendVerificationEmail = async (vendor) => {
   const verificationToken = vendor.verificationToken;
   const options = vendMailOptions(vendor, verificationToken);
   
-  console.log("Resend verification email options:", options);
-  
   try {
     await transporter.sendMail(options);
   } catch (err) {
-    console.error("Error sending verification email:", err);
     throw new Error("Failed to send verification email.");
   }
 };
@@ -94,15 +90,9 @@ const saveNewVendorAndSendEmail = async (vendor, verificationToken) => {
 
 
 const verifyEmail = asyncHandler(async (req, res, next) => {
-  console.log("iput email..........verify.................",req.query.token)
-  const  token  = req.query.token
-  const {email } = req.body
-  console.log("iput email...........................",email)
-  console.log("verification token...........................",token)
-
+  const {email,token } = req.body
   try {
     const vendor = await Vendor.findOne({ verificationToken: token });
-    console.log("existing email................", vendor)
 
     if (!vendor) {
       return res.status(400).json({ message: "Invalid or expired token" });
