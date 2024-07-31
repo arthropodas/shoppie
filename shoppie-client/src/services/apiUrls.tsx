@@ -26,8 +26,29 @@ const userService={
 const vendorRegister = (data:any)=>{
     return axiosPrivate.post<any>('vendors/register', data)
 }
+
+const verifyEmail = async (data:any) => {
+    console.log("data>>>>>>>>", data,"\n","token>>>>>>>>>>>>>>>",)
+
+  try{
+
+      return axiosPrivate.post(
+          '/vendors/verifyEmail', 
+          data, 
+       
+        );
+  }
+  catch(e){
+    console.log("error is", e)
+  }
+  };
+
+
+
+
+
 const vendorService={
-    vendorRegister
+    vendorRegister,verifyEmail
 }
 
-export {userService,vendorService}
+export {userService,vendorService,}

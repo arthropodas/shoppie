@@ -29,7 +29,7 @@ const customerSchema = new mongoose.Schema(
       type: String,
      
     },
-    isVerified: { type: Number, default: 0},
+    isVerified: { type: Number, default: false},
     cust_id: {
       type: String,
       unique: true,

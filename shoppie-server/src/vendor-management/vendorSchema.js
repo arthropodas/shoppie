@@ -1,3 +1,4 @@
+// vendorSchema.js
 const mongoose = require("mongoose");
 const shortid = require("shortid");
 
@@ -10,7 +11,7 @@ const vendorSchema = new mongoose.Schema(
     email: {
       type: String,
       required: true,
-      unique: true,
+      unique: false,
     },
     password: {
       type: String,
@@ -30,6 +31,14 @@ const vendorSchema = new mongoose.Schema(
     createdAt: {
       type: Date,
       default: Date.now,
+    },
+    verificationToken: {
+      type: String,
+      default: null,
+    },
+    isVerified: {
+      type: Boolean,
+      default: false,
     },
   },
   {
