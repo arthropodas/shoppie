@@ -4,13 +4,13 @@ import styles from './Register.module.css'
 import GoogleButton from 'react-google-button'
 import useGoogleSignIn from '../GoogleSignIn'
 import { userService } from '@/src/services/apiUrls'
-import { useRouter } from 'next/navigation'
+// import { useRouter } from 'next/navigation'
 import {useForm} from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as Yup from 'yup';
 import Swal from 'sweetalert2'
 import Link from 'next/link'
-import { useShoppieStore } from '@/src/store/shoppieStore'
+// import { useShoppieStore } from '@/src/store/shoppieStore'
 
 
 
@@ -34,9 +34,9 @@ const Schema = Yup.object().shape({
   });
 const Register:React.FC=()=>{
 
-    const router = useRouter()
+    // const router = useRouter()
 
-    const {setCustId} = useShoppieStore()
+    // const {setCustId} = useShoppieStore()
 
     const {googleData} = useGoogleSignIn()
 
@@ -62,7 +62,9 @@ const Register:React.FC=()=>{
                     timer: 1500
                   });
 
-                 setCustId(res.data.customerId)
+                //  setCustId(res.data.customerId)
+
+                //  localStorage.setItem('cust_id',res.data.customerId)
 
                 //   router.push('/login')
             }
