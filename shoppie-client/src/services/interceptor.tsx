@@ -78,7 +78,7 @@ const refreshAccessToken = async () => {
     });
 
     localStorage.clear();
-    window.location.replace('/login');
+    window.location.replace('/customer/login');
     throw error; 
   }
 };

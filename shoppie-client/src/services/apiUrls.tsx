@@ -20,11 +20,9 @@ const googleSignIn = (data:any)=>{
 
 }
 
-const emailVerify = (id:string)=>{
-
-    console.log("id in api ",id);
+const emailVerify = (uid:string)=>{
     
-    return axiosPrivate.post<any>(`users/verify/${id}`)
+    return axiosPrivate.post<any>(`users/verify/${uid}`)
 }
 
 

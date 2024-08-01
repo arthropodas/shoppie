@@ -85,7 +85,7 @@ const Header: React.FC = () => {
 
       <div className="w-full sm:w-1/3 p-2 sm:p-5 sm:justify-around">
         <span className="flex flex-wrap space-x-2 justify-around">
-          <Link href="/login">
+          <Link href="/customer/login">
             <button
               type="button"
               className="flex items-center p-2 dark:border-white border-2 rounded-lg hover:bg-blue-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"

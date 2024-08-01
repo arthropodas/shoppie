@@ -59,22 +59,30 @@ const registerUser = asyncHandler(async (req, res, next) => {
 const verifyEmail =async(req,res)=>{
   const {id} = req.params;
   console.log(id);
- 
+
   try{
+    const verifiedUser = await Customer.findOne({cust_id:id, isVerified:1})
+    if(verifiedUser){
+      return res.status(400).json({msg:'Email already verified'})
+    }
+ 
+ 
     const user = await Customer.findOne({cust_id:id,isVerified:0})
     if(user){
     user.isVerified=1;
         await user.save();
         return res.status(200).send({msg:'Email verified'})
     }else{
-      return res.status(400).send({msg:'Email already verified'})
+      return res.status(400).json({msg:'Invalid user id'})
     }
-    
-  }catch(error){
-    console.log(error);
+  }catch(err){
+    return res.status(400).send({msg:'Error verifying email'})
   }
+}   
+
+  
+     
  
-}
 
 // SENDING EMAIL 
 

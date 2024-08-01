@@ -132,7 +132,7 @@ const Register:React.FC=()=>{
                 }}
                 onClick={googleData}
                 />
-                <p style={{marginTop:'10px',fontSize:'13px'}}>Already have an account ? <Link href='/login'><span style={{color:'blue'}}>Login</span></Link></p>
+                <p style={{marginTop:'10px',fontSize:'13px'}}>Already have an account ? <Link href='/customer/login'><span style={{color:'blue'}}>Login</span></Link></p>
             </div>
           
         </div>
