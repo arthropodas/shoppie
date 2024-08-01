@@ -17,10 +17,23 @@ const getUsers = ()=>{
 
 const googleSignIn = (data:any)=>{
     return axiosPrivate.post<any>('users/google',data)
+
 }
 
-const userService={
-    login,getUsers,register,googleSignIn
+const emailVerify = (id:string)=>{
+
+    console.log("id in api ",id);
+    
+    return axiosPrivate.post<any>(`users/verify/${id}`)
 }
+
+
+
+const userService={
+    login,getUsers,register,googleSignIn,emailVerify
+}
+
+
+
 
 export {userService}

@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken")
 const generateToken =(data)=>{
 
 
-    const{firstName,lastName,cust_id}=data
+    const{firstName,cust_id}=data
     const accessToken = jwt.sign({
                     user:{
                         firstName: firstName,
