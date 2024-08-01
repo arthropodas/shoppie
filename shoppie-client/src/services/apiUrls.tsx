@@ -33,6 +33,9 @@ const userService={
     login,getUsers,register,googleSignIn,emailVerify
 }
 
+
+
+
 const vendorRegister = (data:any)=>{
     return axiosPrivate.post<any>('vendors/register', data)
 }
